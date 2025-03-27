@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil</title>
+    <script type="module">
+        // Importando os módulos do Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAVk8dNJbsjUzAiXpujbNbxN23sweDqHwQ",
+            authDomain: "macaco-academico.firebaseapp.com",
+            projectId: "macaco-academico",
+            storageBucket: "macaco-academico.appspot.com",
+            messagingSenderId: "735665791037",
+            appId: "1:735665791037:web:be5be2c527a925273d8a54",
+            measurementId: "G-QFWMWSP9P1"
+        };
+
+        // Inicializando o Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Verifica se o usuário está autenticado
+        onAuthStateChanged(auth, user => {
+            if (!user) {
+                // Redireciona para a página de login se o usuário não estiver autenticado
+                window.location.href = "index.html";
+            }
+        });
+
+        // Função de logout
+        function logout() {
+            signOut(auth)
+                .then(() => {
+                    // Redireciona para a página de login após o logout
+                    window.location.href = "index.html";
+                })
+                .catch(error => {
+                    alert("Erro ao sair: " + error.message);
+                });
+        }
+
+        // Tornando a função logout global para ser acessível no HTML
+        window.logout = logout;
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        h2 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Meu Perfil</h2>
+        <button onclick="logout()">Sair</button>
+    </div>
+</body>
+</html>

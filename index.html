@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login e Cadastro</title>
+    <script type="module">
+        // Importando os módulos do Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAVk8dNJbsjUzAiXpujbNbxN23sweDqHwQ",
+            authDomain: "macaco-academico.firebaseapp.com",
+            projectId: "macaco-academico",
+            storageBucket: "macaco-academico.appspot.com",
+            messagingSenderId: "735665791037",
+            appId: "1:735665791037:web:be5be2c527a925273d8a54",
+            measurementId: "G-QFWMWSP9P1"
+        };
+
+        // Inicializando o Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Função de login
+        function login() {
+            const email = document.getElementById('login-email').value;
+            const senha = document.getElementById('login-senha').value;
+
+            signInWithEmailAndPassword(auth, email, senha)
+                .then(() => {
+                    alert("Login realizado com sucesso!");
+                    setTimeout(() => {
+                        window.location.href = "dashboard.html"; // Redireciona para a dashboard
+                    }, 500); // Aguarda 500ms antes de redirecionar
+                })
+                .catch(error => alert(`Erro no login: ${error.message}`));
+        }
+
+        // Função de cadastro
+        function cadastrar() {
+            const email = document.getElementById('cadastro-email').value;
+            const senha = document.getElementById('cadastro-senha').value;
+
+            createUserWithEmailAndPassword(auth, email, senha)
+                .then(() => alert("Cadastro realizado com sucesso!"))
+                .catch(error => alert(`Erro no cadastro: ${error.message}`));
+        }
+
+        // Tornando as funções globais para serem acessíveis no HTML
+        window.login = login;
+        window.cadastrar = cadastrar;
+    </script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .container { width: 300px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
+        input, select, button { width: 100%; padding: 10px; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <div class="container" id="login-container">
+        <h2>Login</h2>
+        <input type="email" id="login-email" placeholder="Email">
+        <input type="password" id="login-senha" placeholder="Senha">
+        <button onclick="login()">Entrar</button>
+        <p>Não tem uma conta? <a href="#" onclick="mostrarCadastro()">Cadastre-se</a></p>
+    </div>
+    <div class="container" id="cadastro-container" style="display: none;">
+        <h2>Cadastro</h2>
+        <input type="email" id="cadastro-email" placeholder="Email">
+        <input type="password" id="cadastro-senha" placeholder="Senha">
+        <select id="cadastro-serie">
+            <option value="1">1º Ano</option>
+            <option value="2">2º Ano</option>
+            <option value="3">3º Ano</option>
+        </select>
+        <button onclick="cadastrar()">Cadastrar</button>
+        <p>Já tem uma conta? <a href="#" onclick="mostrarLogin()">Faça login</a></p>
+    </div>
+</body>
+</html>
