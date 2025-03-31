@@ -49,9 +49,22 @@
                 .catch(error => alert(`Erro no cadastro: ${error.message}`));
         }
 
+        // Funções para alternar entre login e cadastro
+        function mostrarCadastro() {
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('cadastro-container').style.display = 'block';
+        }
+
+        function mostrarLogin() {
+            document.getElementById('cadastro-container').style.display = 'none';
+            document.getElementById('login-container').style.display = 'block';
+        }
+
         // Tornando as funções globais para serem acessíveis no HTML
         window.login = login;
         window.cadastrar = cadastrar;
+        window.mostrarCadastro = mostrarCadastro;
+        window.mostrarLogin = mostrarLogin;
     </script>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; }
